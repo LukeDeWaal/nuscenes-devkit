@@ -5,7 +5,7 @@ from enum import IntEnum
 from typing import Tuple
 
 import numpy as np
-from pyquaternion import Quaternion
+from ...pyquaternion import Quaternion
 
 
 class BoxVisibility(IntEnum):

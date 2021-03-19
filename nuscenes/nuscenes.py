@@ -17,15 +17,15 @@ import sklearn.metrics
 from PIL import Image
 from matplotlib import rcParams
 from matplotlib.axes import Axes
-from pyquaternion import Quaternion
+from ..pyquaternion import Quaternion
 from tqdm import tqdm
 
-from nuscenes.lidarseg.lidarseg_utils import colormap_to_colors, plt_to_cv2, get_stats, \
+from .lidarseg.lidarseg_utils import colormap_to_colors, plt_to_cv2, get_stats, \
     get_labels_in_coloring, create_lidarseg_legend, paint_points_label
-from nuscenes.utils.data_classes import LidarPointCloud, RadarPointCloud, Box
-from nuscenes.utils.geometry_utils import view_points, box_in_image, BoxVisibility, transform_matrix
-from nuscenes.utils.map_mask import MapMask
-from nuscenes.utils.color_map import get_colormap
+from .utils.data_classes import LidarPointCloud, RadarPointCloud, Box
+from .utils.geometry_utils import view_points, box_in_image, BoxVisibility, transform_matrix
+from .utils.map_mask import MapMask
+from .utils.color_map import get_colormap
 
 PYTHON_VERSION = sys.version_info[0]
 
