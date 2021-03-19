@@ -5,3 +5,12 @@ The pyquaternion package is included in this download, as it is not available on
 ## Installation
 
 To install, clone this repository to your conda environment of choice: ```~/anaconda3/envs/YOURENV/lib/python3.X/site-packages/```
+
+
+## Usage
+
+After install, import the devkit as follows:
+```
+import nuscenes_devkit.nuscenes as ns
+import nuscenes_devkit.nuimages as ns
+```
