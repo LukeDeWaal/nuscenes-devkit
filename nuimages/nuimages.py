@@ -11,10 +11,10 @@ from typing import Any, List, Dict, Optional, Tuple, Callable
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image, ImageDraw
-from pyquaternion import Quaternion
+from ..pyquaternion import Quaternion
 
-from nuimages.utils.utils import annotation_name, mask_decode, get_font, name_to_index_mapping
-from nuscenes.utils.color_map import get_colormap
+from .utils.utils import annotation_name, mask_decode, get_font, name_to_index_mapping
+from ..nuscenes.utils.color_map import get_colormap
 
 PYTHON_VERSION = sys.version_info[0]
 
