@@ -1,5 +1,6 @@
 # nuScenes dev-kit.
 # Code written by Oscar Beijbom, Holger Caesar & Fong Whye Kit, 2020.
+# Adapted for use with conda by Luke de Waal, 2021
 
 import json
 import math
@@ -42,7 +43,8 @@ class NuScenes:
                  version: str = 'v1.0-mini',
                  dataroot: str = '/data/sets/nuscenes',
                  verbose: bool = True,
-                 map_resolution: float = 0.1):
+                 map_resolution: float = 0.1,
+                 *args, **kwargs):
         """
         Loads database and creates reverse indexes and shortcuts.
         :param version: Version to load (e.g. "v1.0", ...).

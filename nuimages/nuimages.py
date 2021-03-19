@@ -31,7 +31,8 @@ class NuImages:
                  version: str = 'v1.0-mini',
                  dataroot: str = '/data/sets/nuimages',
                  lazy: bool = True,
-                 verbose: bool = False):
+                 verbose: bool = False,
+                 *args, **kwargs):
         """
         Loads database and creates reverse indexes and shortcuts.
         :param version: Version to load (e.g. "v1.0-train", "v1.0-val", "v1.0-test", "v1.0-mini").
