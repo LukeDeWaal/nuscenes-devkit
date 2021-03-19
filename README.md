@@ -11,6 +11,6 @@ To install, clone this repository to your conda environment of choice: ```~/anac
 
 After install, import the devkit as follows:
 ```
-import nuscenes_devkit.nuscenes as ns
-import nuscenes_devkit.nuimages as ns
+import nuscenes_devkit.nuscenes as nus
+import nuscenes_devkit.nuimages as nim
 ```
