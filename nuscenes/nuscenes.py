@@ -10,6 +10,8 @@ import sys
 import time
 from datetime import datetime
 from typing import Tuple, List, Iterable
+from threading import Thread
+from multiprocessing import Pool
 
 import cv2
 import matplotlib.pyplot as plt
@@ -64,20 +66,35 @@ class NuScenes:
         if verbose:
             print("======\nLoading NuScenes tables for version {}...".format(self.version))
 
+
         # Explicitly assign tables to help the IDE determine valid class members.
-        self.category = self.__load_table__('category')
-        self.attribute = self.__load_table__('attribute')
-        self.visibility = self.__load_table__('visibility')
-        self.instance = self.__load_table__('instance')
-        self.sensor = self.__load_table__('sensor')
-        self.calibrated_sensor = self.__load_table__('calibrated_sensor')
-        self.ego_pose = self.__load_table__('ego_pose')
-        self.log = self.__load_table__('log')
-        self.scene = self.__load_table__('scene')
-        self.sample = self.__load_table__('sample')
-        self.sample_data = self.__load_table__('sample_data')
-        self.sample_annotation = self.__load_table__('sample_annotation')
-        self.map = self.__load_table__('map')
+        use_threads = kwargs.get('threading', False)
+
+        if use_threads:
+            threads = list(range(len(self.table_names)))
+            for i, tab in enumerate(self.table_names):
+                threads[i] = Thread(target=self.__load_table_threaded, args=(self, tab, self.load_table_static, (self.table_root, tab, None)))
+
+            for t in threads:
+                t.start()
+
+            for t in threads:
+                t.join()
+
+        else:
+            self.category = self.__load_table__('category')
+            self.attribute = self.__load_table__('attribute')
+            self.visibility = self.__load_table__('visibility')
+            self.instance = self.__load_table__('instance')
+            self.sensor = self.__load_table__('sensor')
+            self.calibrated_sensor = self.__load_table__('calibrated_sensor')
+            self.ego_pose = self.__load_table__('ego_pose')
+            self.log = self.__load_table__('log')
+            self.scene = self.__load_table__('scene')
+            self.sample = self.__load_table__('sample')
+            self.sample_data = self.__load_table__('sample_data')
+            self.sample_annotation = self.__load_table__('sample_annotation')
+            self.map = self.__load_table__('map')
 
         # Initialize the colormap which maps from class names to RGB values.
         self.colormap = get_colormap()
@@ -139,6 +156,22 @@ class NuScenes:
         with open(osp.join(self.table_root, '{}.json'.format(table_name))) as f:
             table = json.load(f)
         return table
+
+    @staticmethod
+    def load_table_static(arg):
+        table_root, table_name, inplace = arg
+        with open(osp.join(table_root, '{}.json'.format(table_name))) as f:
+            if inplace is not None:
+                inplace = json.load(f)
+                return inplace
+            else:
+                table = json.load(f)
+                return table
+
+    @staticmethod
+    def __load_table_threaded(obj, var: str, func: callable, args):
+        setattr(obj, var, func(args))
+
 
     def __make_reverse_index__(self, verbose: bool) -> None:
         """
